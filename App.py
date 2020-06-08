@@ -57,9 +57,8 @@ def parla(testo):
 def sorveglia():
     return list_hosts_up()
 
-def check_identity(ip):
+def check_identity(ip,allFlg):
     res = {}
-    
     out = run_cmd('sudo nmap -F '+ip,false).replace('"','')
     isDown = out.rfind("(0 hosts up)")
     if(isDown > 0):
@@ -78,7 +77,7 @@ def check_identity(ip):
 
 @app.route('/sorveglia/<ip>')
 def sorverglia_ip(ip):
-    return check_identity(ip)
+    return check_identity(ip,request.args.get('volume'))
 
 @app.route('/')
 def index():
