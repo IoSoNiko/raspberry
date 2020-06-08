@@ -34,7 +34,7 @@ def parla_txt(testo):
     tts.save('tts_out.mp3')
     subprocess.run(["omxplayer","tts_out.mp3"])
 
-def list_hosts_up():
+def list_hosts_up(allFlg):
     out = run_cmd('nmap -v -sn 192.168.1.*',false)
     splitted = out.split('Host is up')
     final = []
@@ -44,7 +44,7 @@ def list_hosts_up():
                 perc = str.rfind('192.168.1.')
                 obj = str[perc: perc + 13].replace('n','').replace('\\','')
                 if(len(obj) > 0):
-                    final.append(obj)
+                    final.append(check_identity(obj,None) if allFlg else obj)
 
     return json.dumps(final)
 
@@ -55,7 +55,8 @@ def parla(testo):
 
 @app.route('/sorveglia')
 def sorveglia():
-    return list_hosts_up()
+    
+    return list_hosts_up(request.args.get('all'))
 
 def check_identity(ip,allFlg):
     res = {}
