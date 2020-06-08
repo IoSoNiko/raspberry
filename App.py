@@ -40,7 +40,7 @@ def check_identity(ip,allFlg):
     out = run_cmd('sudo nmap -F '+ip,false).replace('"','')
     isDown = out.rfind('(0 hosts up)')
     
-    if(isTrue(isDown)):
+    if(isDown > 0):
         response['status'] = "OFFLINE"
     else:
         response['status'] = "ONLINE"
