@@ -43,7 +43,7 @@ def list_hosts_up(allFlg):
     splitted = out.split('Host is up')
     final = []
     if(len(splitted) > 1):
-            print("INFO list_hosts_up >> Ci sono circa "+len(splitted)+" hosts up")
+            print("INFO list_hosts_up >> Ci sono circa "+str(len(splitted))+" hosts up")
             for val in splitted:
                 perc = val.rfind('192.168.1.')
                 obj = val[perc: perc + 13].replace('n','').replace('\\','')
