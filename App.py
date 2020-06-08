@@ -34,9 +34,6 @@ def parla_txt(testo):
     tts.save('tts_out.mp3')
     subprocess.run(["omxplayer","tts_out.mp3"])
 
-def extract_mac(txt):
-
-    
 def check_identity(ip,allFlg):
     response = {}
     response['ip'] = ip
