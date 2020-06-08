@@ -34,10 +34,10 @@ def parla_txt(testo):
     tts.save('tts_out.mp3')
     subprocess.run(["omxplayer","tts_out.mp3"])
 
-def check_identity(ip,allFlg):
+def check_identity(ip):
     response = {}
 #    response['ip'] = ip
-    out = run_cmd('sudo nmap -F '+ip,false).replace('"','')
+#    out = run_cmd('sudo nmap -F '+ip,false).replace('"','')
 #    isDown = out.rfind("(0 hosts up)")
     
 #    if(isDown > 0):
@@ -51,7 +51,7 @@ def check_identity(ip,allFlg):
 #        response['mac'] = out[wi+wrl:wi+wrl+wf]
         
 #    if(allFlg):
-    response['all'] = out
+    response['ip'] = ip
     return response
 
 def list_hosts_up():
@@ -79,7 +79,7 @@ def sorveglia():
 
 @app.route('/sorveglia/<ip>')
 def sorverglia_ip(ip):
-    return check_identity(ip,"true")
+    return check_identity(ip)
 
 @app.route('/')
 def index():
