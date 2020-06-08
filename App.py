@@ -44,11 +44,11 @@ def check_identity(ip,allFlg):
         response['status'] = "OFFLINE"
     else:
         response['status'] = "ONLINE"
-        wr = 'MAC Address: '
-        wrl = len(wr)
-        wf = len("XX:XX:XX:XX:XX:XX")
-        wi = out.rfind(wr)
-        response['mac'] = out[wi+wrl:wi+wrl+wf]
+#        wr = 'MAC Address: '
+#        wrl = len(wr)
+#        wf = len("XX:XX:XX:XX:XX:XX")
+#        wi = out.rfind(wr)
+#        response['mac'] = out[wi+wrl:wi+wrl+wf]
         
     if(allFlg):
         response['all'] = out
