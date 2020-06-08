@@ -38,7 +38,7 @@ def parla_txt(testo):
     subprocess.run(["omxplayer","tts_out.mp3"])
 
 def list_hosts_up(allFlg):
-    print("START list_hosts_up >> allFlg:'"allFlg"'")
+    print("START list_hosts_up >> allFlg:'"+allFlg+"'")
     out = run_cmd('nmap -v -sn 192.168.1.*',false)
     splitted = out.split('Host is up')
     final = []
