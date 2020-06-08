@@ -70,7 +70,7 @@ def check_identity(ip):
         wrl = len(wr)
         wf = len("XX:XX:XX:XX:XX:XX")
         wi = out.rfind(wr)
-        response['mac'] = out[wi+wrl:wi+wrl+wf]
+        res['mac'] = out[wi+wrl:wi+wrl+wf]
     if(allFlg):
         res['all'] = out
         
