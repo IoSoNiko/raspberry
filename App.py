@@ -34,21 +34,24 @@ def parla_txt(testo):
     tts.save('tts_out.mp3')
     subprocess.run(["omxplayer","tts_out.mp3"])
 
-
+def extract_mac(inp):
+   wr = 'MAC Address: '
+   wrl = len(wr)
+   wf = len('XX:XX:XX:XX:XX:XX')
+   wi = inp.rfind(wr)
+   return inp[wi+wrl:wi+wrl+wf] 
+    
 def check_identity(ip,allFlg):
+    response = {'ip':ip}
+    
     out = run_cmd('sudo nmap -F '+ip,false).replace('"','')
-    wr = 'MAC Address: '
     isDown = out.rfind('(0 hosts up)') > 0
-    wrl = len(wr)
-    wf = len('XX:XX:XX:XX:XX:XX')
-    wi = out.rfind(wr)
-    response = {}
-    response['ip'] = ip
-    if(!isDown):
-        response['mac'] = out[wi+wrl:wi+wrl+wf]
+
+    if(isTrue(isDown)):
         response['status'] = "OFFLINE"
     else:
         response['status'] = "ONLINE"
+        response['mac'] = extract_mac(out)
         
     if(allFlg):
         response['all'] = out
