@@ -35,8 +35,8 @@ def parla_txt(testo):
     subprocess.run(["omxplayer","tts_out.mp3"])
 
 
-def check_identity(ip):
-    out = run_cmd('sudo nmap -O '+ip,false).replace('"','')
+def check_identity(ip,allFlg):
+    out = run_cmd('sudo nmap -F '+ip,false).replace('"','')
     wr = 'MAC Address: '
     wrl = len(wr)
     wf = len('XX:XX:XX:XX:XX:XX')
@@ -44,6 +44,9 @@ def check_identity(ip):
     response = {}
     response['ip'] = ip
     response['mac'] = out[wi+wrl:wi+wrl+wf]
+    response['status'] = "ONLINE"
+    if(allFlg):
+        response['all'] = out
     return response
 
 
@@ -72,7 +75,7 @@ def sorveglia():
 
 @app.route('/sorveglia/<ip>')
 def sorverglia_ip(ip):
-    return check_identity(ip)
+    return check_identity(ip,request.args.get('ALL'))
 
 @app.route('/')
 def index():
@@ -92,3 +95,4 @@ def options():
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
+it
