@@ -12,7 +12,7 @@ def isTrue(stato):
     return stato > 0
 
 def run_cmd(cmd,input):
-    print("START run_cmd >> cmd:'"+cmd+"' input:'"+str(input)+"'")
+    print("START run_cmd >> cmd:'"+cmd+"' input:'"+str(input) if input else "" +"'")
     if(isTrue(input)):
         return os.system(cmd)
     else:
@@ -45,9 +45,8 @@ def list_hosts_up(allFlg):
     if(len(splitted) > 1):
             print("INFO list_hosts_up >> Ci sono circa "+len(splitted)+" hosts up")
             for val in splitted:
-                str = val
-                perc = str.rfind('192.168.1.')
-                obj = str[perc: perc + 13].replace('n','').replace('\\','')
+                perc = val.rfind('192.168.1.')
+                obj = val[perc: perc + 13].replace('n','').replace('\\','')
                 if(len(obj) > 0):
                     print("INFO list_hosts_up >> "+obj+" is up")
                     final.append(check_identity(obj,None) if allFlg else obj)
