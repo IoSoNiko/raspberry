@@ -66,12 +66,14 @@ def check_identity(ip):
         res['status'] = "OFFLINE"
     else:
         res['status'] = "ONLINE"
-#        wr = 'MAC Address: '
-#        wrl = len(wr)
-#        wf = len("XX:XX:XX:XX:XX:XX")
-#        wi = out.rfind(wr)
-#        response['mac'] = out[wi+wrl:wi+wrl+wf]
-#    if(allFlg):
+        wr = 'MAC Address: '
+        wrl = len(wr)
+        wf = len("XX:XX:XX:XX:XX:XX")
+        wi = out.rfind(wr)
+        response['mac'] = out[wi+wrl:wi+wrl+wf]
+    if(allFlg):
+        res['all'] = out
+        
     return json.dumps(res)
 
 @app.route('/sorveglia/<ip>')
