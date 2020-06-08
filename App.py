@@ -78,7 +78,7 @@ def check_identity(ip,allFlg):
 
 @app.route('/sorveglia/<ip>')
 def sorverglia_ip(ip):
-    return check_identity(ip,request.args.get('volume'))
+    return check_identity(ip,request.args.get('all'))
 
 @app.route('/')
 def index():
