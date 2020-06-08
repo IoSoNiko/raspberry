@@ -35,11 +35,7 @@ def parla_txt(testo):
     subprocess.run(["omxplayer","tts_out.mp3"])
 
 def extract_mac(txt):
-   wr = 'MAC Address: '
-   wrl = len(wr)
-   wf = len("XX:XX:XX:XX:XX:XX")
-   wi = txt.rfind(wr)
-   return txt[wi+wrl:wi+wrl+wf] 
+
     
 def check_identity(ip,allFlg):
     response = {}
@@ -51,7 +47,11 @@ def check_identity(ip,allFlg):
         response['status'] = "OFFLINE"
     else:
         response['status'] = "ONLINE"
-        response['mac'] = extract_mac(out)
+        wr = 'MAC Address: '
+        wrl = len(wr)
+        wf = len("XX:XX:XX:XX:XX:XX")
+        wi = txt.rfind(wr)
+        response['mac'] = txt[wi+wrl:wi+wrl+wf]
         
     if(allFlg):
         response['all'] = out
