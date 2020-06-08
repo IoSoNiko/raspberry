@@ -45,7 +45,7 @@ def check_identity(ip,allFlg):
     response = {}
     response['ip'] = ip
     out = run_cmd('sudo nmap -F '+ip,false).replace('"','')
-    isDown = out.rfind('(0 hosts up)') > 0
+    isDown = out.rfind('(0 hosts up)')
     
     if(isTrue(isDown)):
         response['status'] = "OFFLINE"
@@ -53,7 +53,7 @@ def check_identity(ip,allFlg):
         response['status'] = "ONLINE"
         response['mac'] = extract_mac(out)
         
-    if(allFlg):
+    if(isTrue(allFlg)):
         response['all'] = out
     
     return response
