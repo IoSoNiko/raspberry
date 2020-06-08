@@ -1,0 +1,28 @@
+<html>
+ <head>
+ </head>
+ <link rel="stylesheet" href="/static/style.css" />
+ <body>
+  <h1>H0M3 C0N7R0L</h1>
+  <div id="container">
+   <video autoplay="true" id="videoElement">
+
+   </video>
+  </div>
+
+ <script>
+  var video = document.querySelector("#videoElement");
+
+  if (navigator.mediaDevices.getUserMedia) {
+    navigator.mediaDevices.getUserMedia({video:true})
+    .then(function (stream) {
+       video.srcObject = stream;
+     })
+     .catch(function (err0r) {
+        console.log("Si è rotto tutto");
+      });  
+
+  }
+ </script>
+ </body>
+</html>

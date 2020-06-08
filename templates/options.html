@@ -1,0 +1,32 @@
+<html>
+<head>
+<link rel="stylesheet" href="/static/style.css" />
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script>
+function changeVolume(){
+document.getElementById("form").submit();
+}
+
+</script>
+</head>
+<body>
+<h1>H0M3 C0N7R0L {{name}}</h1>
+
+<form id="form">
+<div class="slidercontainer" >
+	<label for="volume">Volume</label><br>
+	<input 	id="volume" name="volume" type="range" value="{{volume}}" min="0" max="100" class="slider" onChange="changeVolume()" >
+</div>
+
+<label for="temperatura_interna">Temperatura interna</label><br>
+<input 	id="temperatura_interna" name="temperatura_interna" type="text" value="{{temperatura_interna}}" disabled >
+
+<br>
+<label for="parole">Testo da riprodurre</label><br>
+<textarea id="tparole" name="parole" value="" rows="5" cols="50" onBlur="changeVolume()" >
+</textarea>
+
+</form>
+</body>
+</html>
