@@ -12,7 +12,7 @@ def isTrue(stato):
     return stato > 0
 
 def run_cmd(cmd,input):
-    print("START run_cmd >> cmd:'"+cmd+"' input:'"+input+"'")
+    print("START run_cmd >> cmd:'"+cmd+"' input:'"+str(input)+"'")
     if(isTrue(input)):
         return os.system(cmd)
     else:
@@ -38,7 +38,7 @@ def parla_txt(testo):
     subprocess.run(["omxplayer","tts_out.mp3"])
 
 def list_hosts_up(allFlg):
-    print("START list_hosts_up >> allFlg:'"+allFlg+"'")
+    print("START list_hosts_up >> allFlg:'"+str(allFlg)+"'")
     out = run_cmd('nmap -v -sn 192.168.1.*',false)
     splitted = out.split('Host is up')
     final = []
