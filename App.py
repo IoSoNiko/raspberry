@@ -59,6 +59,7 @@ def sorveglia():
 
 def check_identity(ip,allFlg):
     res = {}
+    res['ip'] = ip
     out = run_cmd('sudo nmap -F '+ip,false).replace('"','')
     isDown = out.rfind("(0 hosts up)")
     if(isDown > 0):
