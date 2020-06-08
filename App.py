@@ -53,7 +53,7 @@ def list_hosts_up(allFlg):
                     final.append(check_identity(obj,None) if allFlg else obj)
     
     res = json.dumps(final)
-    print("END list_hosts_up >> res:"res)
+    print("END list_hosts_up >> res:'"+res+"'")
     return res
 
 @app.route('/parla/<testo>')
