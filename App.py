@@ -50,9 +50,8 @@ def check_identity(ip,allFlg):
 #        wi = out.rfind(wr)
 #        response['mac'] = out[wi+wrl:wi+wrl+wf]
         
-    if(allFlg):
-        response['all'] = out
-    
+#    if(allFlg):
+    response['all'] = out
     return response
 
 def list_hosts_up():
