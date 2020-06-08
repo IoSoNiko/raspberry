@@ -44,10 +44,15 @@ def check_identity(ip,allFlg):
     wi = out.rfind(wr)
     response = {}
     response['ip'] = ip
-    response['mac'] = isDown ? "" : out[wi+wrl:wi+wrl+wf]
-    response['status'] = isDown ? "OFFLINE" : "ONLINE"
+    if(!isDown):
+        response['mac'] = out[wi+wrl:wi+wrl+wf]
+        response['status'] = "OFFLINE"
+    else:
+        response['status'] = "ONLINE"
+        
     if(allFlg):
         response['all'] = out
+    
     return response
 
 
