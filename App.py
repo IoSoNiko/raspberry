@@ -12,10 +12,13 @@ def isTrue(stato):
     return stato > 0
 
 def run_cmd(cmd,input):
+    print("START run_cmd >> cmd:'"+cmd+"' input:'"+input+"'")
     if(isTrue(input)):
         return os.system(cmd)
     else:
-        return str(subprocess.check_output([cmd],shell=True,stderr=subprocess.PIPE))
+        out = str(subprocess.check_output([cmd],shell=True,stderr=subprocess.PIPE))
+        print("END run_cmd >> out:'"+out+"'")
+        return out
     
 def format_amixer_output(out):
     perc = out.rfind('%')
@@ -35,18 +38,23 @@ def parla_txt(testo):
     subprocess.run(["omxplayer","tts_out.mp3"])
 
 def list_hosts_up(allFlg):
+    print("START list_hosts_up >> allFlg:'"allFlg"'")
     out = run_cmd('nmap -v -sn 192.168.1.*',false)
     splitted = out.split('Host is up')
     final = []
     if(len(splitted) > 1):
+            print("INFO list_hosts_up >> Ci sono circa "+len(splitted)+" hosts up")
             for val in splitted:
                 str = val
                 perc = str.rfind('192.168.1.')
                 obj = str[perc: perc + 13].replace('n','').replace('\\','')
                 if(len(obj) > 0):
+                    print("INFO list_hosts_up >> "+obj+" is up")
                     final.append(check_identity(obj,None) if allFlg else obj)
-
-    return json.dumps(final)
+    
+    res = json.dumps(final)
+    print("END list_hosts_up >> res:"res)
+    return res
 
 @app.route('/parla/<testo>')
 def parla(testo):
