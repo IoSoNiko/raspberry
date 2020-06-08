@@ -36,14 +36,14 @@ def parla_txt(testo):
 
 def check_identity(ip,allFlg):
     response = {}
-    response['ip'] = ip
+#    response['ip'] = ip
     out = run_cmd('sudo nmap -F '+ip,false).replace('"','')
-    isDown = out.rfind('(0 hosts up)')
+#    isDown = out.rfind("(0 hosts up)")
     
-    if(isDown > 0):
-        response['status'] = "OFFLINE"
-    else:
-        response['status'] = "ONLINE"
+#    if(isDown > 0):
+#        response['status'] = "OFFLINE"
+#    else:
+#        response['status'] = "ONLINE"
 #        wr = 'MAC Address: '
 #        wrl = len(wr)
 #        wf = len("XX:XX:XX:XX:XX:XX")
@@ -80,7 +80,8 @@ def sorveglia():
 
 @app.route('/sorveglia/<ip>')
 def sorverglia_ip(ip):
-    return check_identity(ip,request.args.get('ALL'))
+    all = request.args.get('ALL')
+    return check_identity(ip,all)
 
 @app.route('/')
 def index():
