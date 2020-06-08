@@ -38,13 +38,14 @@ def parla_txt(testo):
 def check_identity(ip,allFlg):
     out = run_cmd('sudo nmap -F '+ip,false).replace('"','')
     wr = 'MAC Address: '
+    isDown = '(0 hosts up)'
     wrl = len(wr)
     wf = len('XX:XX:XX:XX:XX:XX')
     wi = out.rfind(wr)
     response = {}
     response['ip'] = ip
     response['mac'] = out[wi+wrl:wi+wrl+wf]
-    response['status'] = "ONLINE"
+    response['status'] = out.rfind(isDown) ? "OFFLINE" : "ONLINE"
     if(allFlg):
         response['all'] = out
     return response
