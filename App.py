@@ -34,24 +34,6 @@ def parla_txt(testo):
     tts.save('tts_out.mp3')
     subprocess.run(["omxplayer","tts_out.mp3"])
 
-def check_identity(ip):
-    res = []
-    
-    out = run_cmd('sudo nmap -F '+ip,false).replace('"','')
-    isDown = out.rfind("(0 hosts up)")
-    if(isDown > 0):
-        res['status'] = "OFFLINE"
-    else:
-        res['status'] = "ONLINE"
-#        wr = 'MAC Address: '
-#        wrl = len(wr)
-#        wf = len("XX:XX:XX:XX:XX:XX")
-#        wi = out.rfind(wr)
-#        response['mac'] = out[wi+wrl:wi+wrl+wf]
-#    if(allFlg):
-
-    return json.dumps(res)
-
 def list_hosts_up():
     out = run_cmd('nmap -v -sn 192.168.1.*',false)
     splitted = out.split('Host is up')
@@ -74,6 +56,23 @@ def parla(testo):
 @app.route('/sorveglia')
 def sorveglia():
     return list_hosts_up()
+
+def check_identity(ip):
+    res = {}
+    
+    out = run_cmd('sudo nmap -F '+ip,false).replace('"','')
+    isDown = out.rfind("(0 hosts up)")
+    if(isDown > 0):
+        res['status'] = "OFFLINE"
+    else:
+        res['status'] = "ONLINE"
+#        wr = 'MAC Address: '
+#        wrl = len(wr)
+#        wf = len("XX:XX:XX:XX:XX:XX")
+#        wi = out.rfind(wr)
+#        response['mac'] = out[wi+wrl:wi+wrl+wf]
+#    if(allFlg):
+    return json.dumps(res)
 
 @app.route('/sorveglia/<ip>')
 def sorverglia_ip(ip):
