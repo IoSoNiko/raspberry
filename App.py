@@ -37,14 +37,13 @@ def parla_txt(testo):
 
 def check_identity(ip):
     out = run_cmd('sudo nmap -O '+ip,false).replace('"','')
-    split2 = out.split('MAC Address:')
+    Mac_i = out.rfind('MAC Address:')
 #    split = split2[len(split2) - 1]
 #    parentesi = split.rfind('(')
     response = {}
     response['ip'] = ip
-    response['split0'] = split2[0]
-    response['splitLen'] = split2[len(split2)-1]
-    response['full'] = out
+    response['mac'] = out[Mac_i:Mac_i+30]
+    #response['full'] = out
     return response
 
 
