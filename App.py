@@ -80,8 +80,7 @@ def sorveglia():
 
 @app.route('/sorveglia/<ip>')
 def sorverglia_ip(ip):
-    all = request.args.get('ALL')
-    return check_identity(ip,all)
+    return check_identity(ip,"true")
 
 @app.route('/')
 def index():
