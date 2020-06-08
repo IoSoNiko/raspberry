@@ -53,7 +53,7 @@ def check_identity(ip,allFlg):
         response['status'] = "ONLINE"
         response['mac'] = extract_mac(out)
         
-    if(isTrue(allFlg)):
+    if(allFlg):
         response['all'] = out
     
     return response
