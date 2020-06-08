@@ -47,8 +47,8 @@ def check_identity(ip,allFlg):
         wr = 'MAC Address: '
         wrl = len(wr)
         wf = len("XX:XX:XX:XX:XX:XX")
-        wi = txt.rfind(wr)
-        response['mac'] = txt[wi+wrl:wi+wrl+wf]
+        wi = out.rfind(wr)
+        response['mac'] = out[wi+wrl:wi+wrl+wf]
         
     if(allFlg):
         response['all'] = out
