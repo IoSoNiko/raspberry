@@ -124,6 +124,11 @@ def index():
 def pull():
     return git_pull()
 
+@app.route('/giambo')
+def giambo():
+    return 'Giambo'
+
+
 @app.route('/SETTINGS/')
 def options():
 #    print ('vol= '+request.args.get('volume'))
