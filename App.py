@@ -22,6 +22,7 @@ def run_cmd(cmd,input):
         return out
 
  def git_pull():
+    print("START git_pull >> ")
     return run_cmd('sudo git pull',false)
     
 def format_amixer_output(out):
@@ -120,7 +121,7 @@ def index():
     return render_template('index.html')
 
 @app.route('/pull')
-def index():
+def pull():
     return git_pull()
 
 @app.route('/SETTINGS/')
