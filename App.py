@@ -81,8 +81,8 @@ def extract_mac(out):
     wf = len("XX:XX:XX:XX:XX:XX")
     wi = out.rfind(wr)
     mac = out[wi+wrl:wi+wrl+wf]
-    print("INFO extract_mac >> mac: "+mac+" mac[2:2] = "+mac[2:2] +"mac[2:3] = "+mac[2:3])
-    if(mac[2:2] == ':'):
+    print("INFO extract_mac >> mac: "+mac)
+    if(mac[2:3] == ':'):
         return mac
     else:
         return ""
