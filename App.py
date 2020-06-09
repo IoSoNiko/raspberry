@@ -21,7 +21,7 @@ def run_cmd(cmd,input):
         print("END run_cmd >> out:'"+out+"'")
         return out
 
- def git_pull():
+def git_pull():
     print("START git_pull >> ")
     return run_cmd('sudo git pull',false)
     
