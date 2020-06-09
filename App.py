@@ -40,7 +40,7 @@ def parla_txt(testo):
 def find_my_ip():
     print("START find_my_ip >>")
     out = run_cmd('ifconfig',false)
-    ipP = out.lfind('192.168.1.')
+    ipP = out.find('192.168.1.')
     print("INFO find_my_ip >> ipP: "+str(ipP))
     my_ip = out[ipP:ipP+len("192.168.1.255")]
     print("END find_my_ip >> my_ip: "+my_ip)
@@ -106,7 +106,8 @@ def check_identity(ip,my_ip,allFlg):
 
 @app.route('/sorveglia/<ip>')
 def sorverglia_ip(ip):
-    return json.dumps(check_identity(ip,request.args.get('all')))
+    my_ip = ""
+    return json.dumps(check_identity(ip,my_ip,request.args.get('all')))
 
 @app.route('/')
 def index():
