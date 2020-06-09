@@ -20,6 +20,9 @@ def run_cmd(cmd,input):
         out = str(subprocess.check_output([cmd],shell=True,stderr=subprocess.PIPE))
         print("END run_cmd >> out:'"+out+"'")
         return out
+
+ def git_pull():
+    return run_cmd('sudo git pull',false)
     
 def format_amixer_output(out):
     perc = out.rfind('%')
@@ -115,6 +118,10 @@ def sorverglia_ip(ip):
 @app.route('/')
 def index():
     return render_template('index.html')
+
+@app.route('/pull')
+def index():
+    return git_pull()
 
 @app.route('/SETTINGS/')
 def options():
