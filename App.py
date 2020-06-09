@@ -37,8 +37,17 @@ def parla_txt(testo):
     tts.save('tts_out.mp3')
     subprocess.run(["omxplayer","tts_out.mp3"])
 
+def find_my_ip():
+    print("START find_my_ip >>")
+    out = run_cmd('ifconfig',false)
+    ipP = out.lfind('192.168.1.')
+    print("INFO find_my_ip >> ipP: "+str(ipP))
+    my_ip = out[ipP:ipP+len("192.168.1.255")]
+    print("END find_my_ip >> my_ip: "+my_ip)
+    
 def list_hosts_up(allFlg):
     print("START list_hosts_up >> allFlg:'"+str(allFlg)+"'")
+    my_ip = find_my_ip()
     out = run_cmd('nmap -v -sn 192.168.1.*',false)
     splitted = out.split('Host is up')
     final = []
@@ -49,7 +58,7 @@ def list_hosts_up(allFlg):
                 obj = val[perc: perc + 13].replace('n','').replace('\\','')
                 if(len(obj) > 0):
                     print("INFO list_hosts_up >> "+obj+" is up")
-                    final.append(check_identity(obj,None) if allFlg else obj)
+                    final.append(check_identity(obj,my_ip,None) if allFlg else obj)
     
     res = json.dumps(final)
     print("END list_hosts_up >> res:'"+res+"'")
@@ -65,28 +74,39 @@ def sorveglia():
     
     return list_hosts_up(request.args.get('all'))
 
-def check_identity(ip,allFlg):
+def extract_mac(out):
+    wr = 'MAC Address: '
+    wrl = len(wr)
+    wf = len("XX:XX:XX:XX:XX:XX")
+    wi = out.rfind(wr)
+    mac = out[wi+wrl:wi+wrl+wf]
+    if(mac[2:2] == ":")
+        return mac
+    else:
+        return ""
+    
+    
+def check_identity(ip,my_ip,allFlg):
     res = {}
     res['ip'] = ip
+    res['status'] = "ONLINE"
+    if(my_ip == ip):
+        return res
+    
     out = run_cmd('sudo nmap -F '+ip,false).replace('"','')
     isDown = out.rfind("(0 hosts up)")
     if(isDown > 0):
         res['status'] = "OFFLINE"
     else:
-        res['status'] = "ONLINE"
-        wr = 'MAC Address: '
-        wrl = len(wr)
-        wf = len("XX:XX:XX:XX:XX:XX")
-        wi = out.rfind(wr)
-        res['mac'] = out[wi+wrl:wi+wrl+wf]
+        res['mac'] = extract_mac(out)
     if(allFlg):
         res['all'] = out
         
-    return json.dumps(res)
+    return res
 
 @app.route('/sorveglia/<ip>')
 def sorverglia_ip(ip):
-    return check_identity(ip,request.args.get('all'))
+    return json.dumps(check_identity(ip,request.args.get('all')))
 
 @app.route('/')
 def index():
