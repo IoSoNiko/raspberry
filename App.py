@@ -80,7 +80,7 @@ def extract_mac(out):
     wf = len("XX:XX:XX:XX:XX:XX")
     wi = out.rfind(wr)
     mac = out[wi+wrl:wi+wrl+wf]
-    if(mac[2:2] == ":")
+    if(mac[2:2] == ':'):
         return mac
     else:
         return ""
