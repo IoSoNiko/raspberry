@@ -75,11 +75,13 @@ def sorveglia():
     return list_hosts_up(request.args.get('all'))
 
 def extract_mac(out):
+    print("START extract_mac >>"+out)
     wr = 'MAC Address: '
     wrl = len(wr)
     wf = len("XX:XX:XX:XX:XX:XX")
     wi = out.rfind(wr)
     mac = out[wi+wrl:wi+wrl+wf]
+    print("INFO extract_mac >> mac: "+mac+" mac[2:2] = "+mac[2:2] +"mac[2:3] = "+mac[2:3])
     if(mac[2:2] == ':'):
         return mac
     else:
