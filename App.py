@@ -59,7 +59,7 @@ def get_all_users():
 def search_identity(mac):
     all_users = get_all_users()
     for row in rows:
-        if(row['mac'] == mac)
+        if(row['mac'] == mac):
             return row
 
 def check_identity(ip):
