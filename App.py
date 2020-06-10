@@ -61,7 +61,7 @@ def get_all_users():
     cur = create_connection(DB_NAME).cursor()
     cur.execute("SELECT * FROM USER")
     rows = cur.fetchall()
-    print("END get_all_users >> rows:"+rows)
+    #print("END get_all_users >> rows:"+rows)
     return rows
     
 def search_identity(mac):
@@ -111,7 +111,7 @@ def git_pull():
 
 
 
-def list_hosts_up():
+def list_hosts_up(allFlg):
     out = run_cmd('nmap -v -sn 192.168.1.*',false)
     splitted = out.split('Host is up')
     my_ip = find_my_ip()
@@ -123,7 +123,7 @@ def list_hosts_up():
                 perc = str.rfind('192.168.1.')
                 obj = str[perc: perc + 13].replace('n','').replace('\\','')
                 if(len(obj) > 0):
-                    final.append(check_identity(obj,my_ip,0))
+                    final.append(check_identity(obj,my_ip,allFlg))
 
     return json.dumps(final)
 
