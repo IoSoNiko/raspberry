@@ -105,6 +105,9 @@ def check_identity(ip,my_ip,allFlg):
     
     return res
 
+def git_pull():
+    print("START git_pull >> ")
+    return run_cmd('sudo git pull',false)
 
 
 
@@ -131,7 +134,16 @@ def parla(testo):
 
 @app.route('/sorveglia')
 def sorveglia():
-    return list_hosts_up()
+    return list_hosts_up(request.args.get('all'))	
+
+@app.route('/sorveglia/<ip>')	
+def sorverglia_ip(ip):	
+    my_ip = ""	
+    return json.dumps(check_identity(ip,my_ip,request.args.get('all')))
+
+@app.route('/pull')	
+def pull():	
+    return git_pull()
 
 @app.route('/')
 def index():
