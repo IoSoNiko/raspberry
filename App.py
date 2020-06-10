@@ -111,6 +111,8 @@ def check_identity(ip,my_ip,allFlg):
 def list_hosts_up():
     out = run_cmd('nmap -v -sn 192.168.1.*',false)
     splitted = out.split('Host is up')
+    my_ip = find_my_ip()
+    
     final = []
     if(len(splitted) > 1):
             for val in splitted:
@@ -118,7 +120,7 @@ def list_hosts_up():
                 perc = str.rfind('192.168.1.')
                 obj = str[perc: perc + 13].replace('n','').replace('\\','')
                 if(len(obj) > 0):
-                    final.append(check_identity(obj))
+                    final.append(check_identity(obj,my_ip,0))
 
     return json.dumps(final)
 
