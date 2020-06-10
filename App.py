@@ -37,6 +37,14 @@ def parla_txt(testo):
     tts.save('tts_out.mp3')
     subprocess.run(["omxplayer","tts_out.mp3"])
 
+def find_my_ip():
+    print("START find_my_ip >>")
+    out = run_cmd('ifconfig',false)
+    ipP = out.find('192.168.1.')
+    print("INFO find_my_ip >> ipP: "+str(ipP))
+    my_ip = out[ipP:ipP+len("192.168.1.255")]
+    print("END find_my_ip >> my_ip: "+my_ip)
+    
 def create_connection(db_file):
     print("START create_connection >> db_file:"+db_file)
     conn = None
@@ -62,18 +70,42 @@ def search_identity(mac):
         if(row['mac'] == mac):
             return row
 
-def check_identity(ip):
-    out = run_cmd('sudo nmap -O '+ip,false)
-    split2 = out.split('MAC Address')
+def extract_mac(out):
+    print("START extract_mac >>"+out)
+    wr = 'MAC Address: '
+    wrl = len(wr)
+    wf = len("XX:XX:XX:XX:XX:XX")
+    wi = out.rfind(wr)
+    mac = out[wi+wrl:wi+wrl+wf]
+    print("INFO extract_mac >> mac: "+mac)
+    if(mac[2:3] == ':'):
+        return mac
+    else:
+        return ""
+
     
-    parentesi = split.rfind('(')
-    mac = split[parentesi:parentesi+15]
-    response = {}
-    response['ip'] = ip
-    response['mac'] = mac
-    response['full'] = out
-    response['row'] = search_identity(mac)
-    return response
+def check_identity(ip,my_ip,allFlg):
+    res = {}
+    res['ip'] = ip
+    res['status'] = "ONLINE"
+    
+    if(my_ip == ip):
+        return res
+
+    out = run_cmd('sudo nmap -F '+ip,false).replace('"','')
+    isDown = out.rfind("(0 hosts up)")
+    if(isDown > 0):
+        res['status'] = "OFFLINE"
+    else:
+        res['mac'] = extract_mac(out)
+        res['row'] = search_identity(res['mac'])
+        
+    if(allFlg):
+        res['all'] = out
+    
+    return res
+
+
 
 
 def list_hosts_up():
