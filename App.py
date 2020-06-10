@@ -8,7 +8,7 @@ import sqlite3
 app = Flask(__name__)
 true = 1
 false = 0
-DB_NAME = "home_control"
+DB_NAME = "../db/home_control"
 
 
 def isTrue(stato):
