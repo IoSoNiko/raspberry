@@ -1,12 +1,15 @@
-import os
+import os 
 import subprocess
 from flask import Flask , render_template , request
 from gtts import gTTS
 import json
+import sqlite3
 
 app = Flask(__name__)
 true = 1
 false = 0
+DB_NAME = "home_control"
+
 
 def isTrue(stato):
     return stato > 0
@@ -34,16 +37,41 @@ def parla_txt(testo):
     tts.save('tts_out.mp3')
     subprocess.run(["omxplayer","tts_out.mp3"])
 
+def create_connection(db_file):
+    print("START create_connection >> db_file:"+db_file)
+    conn = None
+    try:
+        conn = sqlite3.connect(db_file)
+    except Error as e:
+        print(e)
+    print("END create_connection >>)
+    return conn
+    
+def get_all_users():
+    print("START get_all_users >>")
+    
+    cur = create_connection(DB_NAME).cursor()
+    cur.execute("SELECT * FROM USER")
+    rows = cur.fetchall()
+    return rows
+    
+def search_identity(mac):
+    all_users = get_all_users()
+    for row in rows:
+        if(row['mac'] == mac)
+            return row
 
 def check_identity(ip):
     out = run_cmd('sudo nmap -O '+ip,false)
     split2 = out.split('MAC Address')
     
     parentesi = split.rfind('(')
+    mac = split[parentesi:parentesi+15]
     response = {}
     response['ip'] = ip
-    response['mac'] = split[parentesi:parentesi+15]
+    response['mac'] = mac
     response['full'] = out
+    response['row'] = search_identity(mac)
     return response
 
 
