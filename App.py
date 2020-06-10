@@ -67,7 +67,7 @@ def get_all_users():
 def search_identity(mac):
     all_users = get_all_users()
     for row in all_users:
-        if(row['mac'] == mac):
+        if(row[2] == mac):
             return row
 
 def extract_mac(out):
