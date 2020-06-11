@@ -64,11 +64,16 @@ def get_all_users():
     #print("END get_all_users >> rows:"+rows)
     return rows
     
-def search_identity(mac):
-    all_users = get_all_users()
+def insert_new_user(user):
+    cur = create_connection(DB_NAME).cursor()
+    sql_insert ="INSERT INTI USER (ip,mac) VALUES ('"+user['ip']+"','"+user['mac']+"');"
+    return cur.execute(sql_insert)
+    
+def search_identity(cur_user,all_users):
     for row in all_users:
-        if(row[2] == mac):
+        if(row[2] == cur_user['mac']):
             return row
+    return insert_new_user(cur_user)
 
 def extract_mac(out):
     print("START extract_mac >>"+out)
@@ -84,7 +89,7 @@ def extract_mac(out):
         return ""
 
     
-def check_identity(ip,my_ip,allFlg):
+def check_identity(ip,my_ip,allFlg,all_users):
     res = {}
     res['ip'] = ip
     res['status'] = "ONLINE"
@@ -98,7 +103,7 @@ def check_identity(ip,my_ip,allFlg):
         res['status'] = "OFFLINE"
     else:
         res['mac'] = extract_mac(out)
-        res['row'] = search_identity(res['mac'])
+        res['row'] = search_identity(res,all_users)
         
     if(allFlg):
         res['all'] = out
@@ -123,7 +128,7 @@ def list_hosts_up(allFlg):
                 perc = str.rfind('192.168.1.')
                 obj = str[perc: perc + 13].replace('n','').replace('\\','')
                 if(len(obj) > 0):
-                    final.append(check_identity(obj,my_ip,allFlg))
+                    final.append(check_identity(obj,my_ip,allFlg,get_all_users()))
 
     return json.dumps(final)
 
