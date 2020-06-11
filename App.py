@@ -62,13 +62,20 @@ def get_all_users():
     cur.execute("SELECT * FROM USER")
     rows = cur.fetchall()
     #print("END get_all_users >> rows:"+rows)
+    cur.close()
     return rows
     
 def insert_new_user(user):
-    cur = create_connection(DB_NAME).cursor()
+    print("START insert_new_user >>")   
+    con = create_connection(DB_NAME)
     sql_insert ="INSERT INTI USER (ip,mac) VALUES ('"+user['ip']+"','"+user['mac']+"');"
-    return cur.execute(sql_insert)
-    
+    print("INFO insert_new_user >>"+sql_insert) 
+    cur= con.cursor()
+    count = cur.execute(sql_insert)
+    con.commit()
+    cursore.close()
+    return count 
+
 def search_identity(cur_user,all_users):
     for row in all_users:
         if(row[2] == cur_user['mac']):
