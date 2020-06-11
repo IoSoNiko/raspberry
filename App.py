@@ -68,7 +68,7 @@ def get_all_users():
 def insert_new_user(user):
     print("START insert_new_user >>")   
     con = create_connection(DB_NAME)
-    sql_insert ="INSERT INTI USER (ip,mac) VALUES ('"+user['ip']+"','"+user['mac']+"');"
+    sql_insert ="INSERT INTO USER (ip,mac) VALUES ('"+user['ip']+"','"+user['mac']+"');"
     print("INFO insert_new_user >>"+sql_insert) 
     cur= con.cursor()
     count = cur.execute(sql_insert)
