@@ -73,7 +73,7 @@ def insert_new_user(user):
     cur= con.cursor()
     count = cur.execute(sql_insert)
     con.commit()
-    cursore.close()
+    cur.close()
     return count 
 
 def search_identity(cur_user,all_users):
