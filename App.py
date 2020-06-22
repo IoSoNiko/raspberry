@@ -120,8 +120,8 @@ def index():
 def options():
 #    print ('vol= '+request.args.get('volume'))
     if(request.args.get('volume')):
-        volumeIn = run_cmd('amixer set PCM -- ' + request.args.get('volume') + '%',true)
-    volume = format_amixer_output(run_cmd('amixer get PCM ',false))
+        volumeIn = run_cmd('amixer set Headphone -- ' + request.args.get('volume') + '%',true)
+    volume = format_amixer_output(run_cmd('amixer get Headphone ',false))
     temperatura_interna = format_temperatura_interna(run_cmd('/opt/vc/bin/vcgencmd measure_temp',false))
     if(request.args.get('parole')):
         parla_txt(request.args.get('parole'))
